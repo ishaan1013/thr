@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { MessageCircle } from "lucide-react";
-import Comment from "./comment";
+import Comment from "./createComment";
 
 export default function CommentModal() {
   return (

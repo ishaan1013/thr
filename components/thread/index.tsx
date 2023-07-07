@@ -11,12 +11,12 @@ export default function Item({
 }) {
   const mainClass = comment
     ? "space-x-2 flex font-light"
-    : "px-3 py-4 space-x-2 flex border-b font-light border-neutral-800";
+    : "px-3 py-4 space-x-2 flex border-b font-light border-neutral-900";
 
   return (
     <div className={mainClass}>
       <div className="flex flex-col items-center justify-between">
-        <div className="w-8 h-8 rounded-full bg-orange-700"></div>
+        <div className="w-8 h-8 mt-1 rounded-full bg-orange-700"></div>
         <div className="w-0.5 grow mt-2 rounded-full bg-neutral-700" />
         <Others others={others} />
       </div>

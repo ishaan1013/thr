@@ -4,7 +4,7 @@ import { Paperclip } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 
-export default function Comment() {
+export default function CreateComment() {
   const [comment, setComment] = useState("");
 
   return (

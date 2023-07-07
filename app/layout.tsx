@@ -22,9 +22,9 @@ export default function RootLayout({
         {" "}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <>
-            <main className="w-screen flex justify-center bg-black">
+            <main className="w-screen flex justify-center bg-neutral-950">
               <Nav />
-              <div className="min-h-screen text-base w-full max-w-[500px] bg-black relative pb-14">
+              <div className="min-h-screen text-base w-full max-w-[500px] bg-neutral-950 relative pb-14">
                 {children}
               </div>
             </main>
