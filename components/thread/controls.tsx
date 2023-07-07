@@ -4,6 +4,7 @@ import { Heart, MessageCircle, Repeat2, Send } from "lucide-react";
 import { useState } from "react";
 import Share from "./share";
 import CommentModal from "./commentModal";
+import Repost from "./repost";
 
 export default function Controls() {
   const [liked, setLiked] = useState(false);
@@ -17,7 +18,7 @@ export default function Controls() {
         <Heart fill={liked ? "#dc2626" : ""} className="w-5 h-5" />
       </button>
       <CommentModal />
-      <Repeat2 className="w-5 h-5" />
+      <Repost />
       <Share />
     </div>
   );
