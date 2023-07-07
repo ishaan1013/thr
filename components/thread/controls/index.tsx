@@ -1,9 +1,9 @@
 "use client";
 
-import { Heart, MessageCircle, Repeat2, Send } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useState } from "react";
 import Share from "./share";
-import CommentModal from "./commentModal";
+import CommentModal from "../comment/commentModal";
 import Repost from "./repost";
 
 export default function Controls() {
