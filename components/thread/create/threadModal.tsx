@@ -10,20 +10,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { MessageCircle } from "lucide-react";
+import { Edit } from "lucide-react";
 import { Create } from ".";
 
 export function Modal() {
   return (
     <Dialog>
       <DialogTrigger>
-        <MessageCircle className="w-5 h-5" />
+        <Edit className={`w-[22px] h-[22px] text-neutral-600`} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="mb-3">Reply</DialogTitle>
+          <DialogTitle className="mb-3">New Thread</DialogTitle>
         </DialogHeader>
-        <Item comment others={[]} />
         <Create />
       </DialogContent>
     </Dialog>

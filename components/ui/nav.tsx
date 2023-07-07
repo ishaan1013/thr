@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { Edit, Heart, Home, Search, User2 } from "lucide-react";
+import { Modal } from "../thread/create";
 
 export default function Nav() {
   const path = usePathname();
@@ -18,9 +19,7 @@ export default function Nav() {
           className={`w-6 h-6 ${path === "/search" ? "" : "text-neutral-600"}`}
         />
       </Link>
-      <button>
-        <Edit className={`w-[22px] h-[22px] text-neutral-600`} />
-      </button>
+      <Modal />
       <Link href="/activity">
         <Heart
           className={`w-6 h-6 ${

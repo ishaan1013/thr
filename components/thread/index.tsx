@@ -32,7 +32,11 @@ export default function Item({
         </div>
 
         <div
-          className={comment ? "text-base/relaxed pb-3" : "text-base/relaxed"}
+          className={
+            comment
+              ? "text-base/relaxed pb-3 text-left"
+              : "text-base/relaxed text-left"
+          }
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
           ipsam incidunt necessitatibus at. Deserunt tempora totam quaerat

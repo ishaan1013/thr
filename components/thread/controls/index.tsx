@@ -3,7 +3,7 @@
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import Share from "./share";
-import CommentModal from "../comment/commentModal";
+import { Modal } from "../comment";
 import Repost from "./repost";
 
 export default function Controls() {
@@ -15,9 +15,9 @@ export default function Controls() {
         onClick={() => setLiked(!liked)}
         className={`w-5 duration-200 h-5 ${liked ? "text-red-600" : ""}`}
       >
-        <Heart fill={liked ? "#dc2626" : ""} className="w-5 h-5" />
+        <Heart fill={liked ? "#dc2626" : "#0a0a0a"} className="w-5 h-5" />
       </button>
-      <CommentModal />
+      <Modal />
       <Repost />
       <Share />
     </div>
