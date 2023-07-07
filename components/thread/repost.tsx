@@ -20,7 +20,7 @@ export default function Repost() {
         <DropdownMenuItem
           onClick={() => {
             toast({
-              title: "Scheduled: Catch up",
+              title: "Reposted",
             });
           }}
         >

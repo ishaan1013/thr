@@ -1,7 +1,8 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/themeProvider";
+import { ThemeProvider } from "@/components/ui/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
+import Nav from "@/components/ui/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,12 @@ export default function RootLayout({
         {" "}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <>
-            {children}
+            <main className="w-screen flex justify-center bg-black">
+              <Nav />
+              <div className="min-h-screen text-base w-full max-w-[500px] bg-black relative pb-14">
+                {children}
+              </div>
+            </main>
             <Toaster />
           </>
         </ThemeProvider>
