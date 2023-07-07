@@ -10,3 +10,20 @@ body {
 
   overflow-x: hidden;
 }
+
+.mini-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mini-scrollbar::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+.mini-scrollbar::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 10px;
+}
+
+.mini-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #525252;
+}

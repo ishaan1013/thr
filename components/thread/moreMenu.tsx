@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { Flag, MoreHorizontal, UserX2 } from "lucide-react";
 
 export default function MoreMenu() {
   return (
@@ -16,8 +16,15 @@ export default function MoreMenu() {
         <MoreHorizontal className="w-5 h-5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>Block</DropdownMenuItem>
-        <DropdownMenuItem className="!text-red-500">Report</DropdownMenuItem>
+        <DropdownMenuItem>
+          <UserX2 className="w-4 h-4 mr-2" />
+          Block
+        </DropdownMenuItem>
+        <DropdownMenuItem className="!text-red-500">
+          {" "}
+          <Flag className="w-4 h-4 mr-2" />
+          Report
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

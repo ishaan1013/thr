@@ -1,7 +1,7 @@
-import Item from "@/components/thread";
-import { Edit, Heart, Home, Search, User } from "lucide-react";
 import Image from "next/image";
 
+import { Edit, Heart, Home, Search, User } from "lucide-react";
+import Item from "@/components/thread";
 import logo from "@/assets/threads.svg";
 import { Button } from "@/components/ui/button";
 
@@ -25,9 +25,9 @@ export default function Page() {
             />
           </div>
         </div>
-        <Item />
-        <Item />
-        <Item />
+        <Item others={[]} />
+        <Item others={["1", "2", "3"]} />
+        <Item others={["1"]} />
         <div className="w-full py-4 flex justify-center">
           <Button variant="outline">Load More</Button>
         </div>
