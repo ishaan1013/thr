@@ -12,30 +12,39 @@ datasource db {
 }
 
 model Post {
-  id         String   @id @default(cuid())
-  text       String
-  author     User     @relation("Author", fields: [authorId], references: [id])
-  authorId   String
-  reposter   User?    @relation("Reposter", fields: [reposterId], references: [id])
-  reposterId String?
-  createdAt  DateTime @default(now())
-  likes      Likes[]
+  id        String   @id @default(cuid())
+  text      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  repost    Repost?
+  createdAt DateTime @default(now())
+  likes     Likes[]
 
   parentId String?
   parent   Post?   @relation("ParentChildren", fields: [parentId], references: [id])
   children Post[]  @relation("ParentChildren")
 }
 
+model Repost {
+  id     String @id @default(cuid())
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String @unique
+
+  reposter   User   @relation(fields: [reposterId], references: [id])
+  reposterId String
+}
+
 model User {
-  id         String  @id
-  username   String  @unique
+  id         String   @id
+  username   String   @unique
   name       String?
+  image      String
   bio        String?
-  posts      Post[]  @relation("Author")
-  reposts    Post[]  @relation("Reposter")
+  posts      Post[]
+  reposts    Repost[]
   likes      Likes[]
-  followedBy User[]  @relation("UserFollows")
-  following  User[]  @relation("UserFollows")
+  followedBy User[]   @relation("UserFollows")
+  following  User[]   @relation("UserFollows")
 }
 
 model Likes {

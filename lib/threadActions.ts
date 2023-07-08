@@ -1,67 +1,125 @@
-// "use server";
+"use server";
 
-// import { revalidatePath } from "next/cache";
-// import prisma from "./prisma";
+import { revalidatePath } from "next/cache";
+import prisma from "./prisma";
 
-// export async function createTask(id: string, path: string, dateId: string) {
-//   console.log("created");
+export async function createThread(
+  text: string,
+  authorId: string,
+  path: string
+) {
+  await prisma.post.create({
+    data: {
+      text,
+      author: {
+        connect: {
+          id: authorId,
+        },
+      },
+    },
+  });
 
-//   await prisma.task.create({
-//     data: {
-//       id: id,
-//       text: "New Task",
-//       checked: false,
-//       dateId,
-//       label: "RED",
-//     },
-//   });
+  if (path === "/" || path.startsWith("/@")) {
+    revalidatePath(path);
+  }
+}
 
-//   revalidatePath("/editor/" + path);
-// }
+export async function commentOnThread(
+  text: string,
+  authorId: string,
+  threadId: string,
+  path: string
+) {
+  await prisma.post.create({
+    data: {
+      text,
+      author: {
+        connect: {
+          id: authorId,
+        },
+      },
+      parent: {
+        connect: {
+          id: threadId,
+        },
+      },
+    },
+  });
 
-// export async function updateTask(itemId: string, text: string) {
-//   await prisma.task.update({
-//     where: {
-//       id: itemId,
-//     },
-//     data: {
-//       text,
-//     },
-//   });
-// }
+  revalidatePath(path);
+}
 
-// export async function relabelTask(itemId: string, label: Label) {
-//   await prisma.task.update({
-//     where: {
-//       id: itemId,
-//     },
-//     data: {
-//       label,
-//     },
-//   });
-// }
+export async function repostThread(
+  id: string,
+  reposterId: string,
+  path: string
+) {
+  await prisma.repost.create({
+    data: {
+      post: {
+        connect: {
+          id,
+        },
+      },
+      reposter: {
+        connect: {
+          id: reposterId,
+        },
+      },
+    },
+  });
 
-// export async function checkTask(itemId: string, newState: boolean) {
-//   const updated = await prisma.task.update({
-//     where: {
-//       id: itemId,
-//     },
-//     data: {
-//       checked: newState,
-//     },
-//   });
+  revalidatePath(path);
+}
 
-//   console.log("checked: ", updated);
-// }
+export async function deleteThread(id: string, path: string) {
+  // ! navigate back to home if on dedicated page for this thread & its deleted
 
-// export async function deleteTask(path: string, itemId: string) {
-//   // DELETE task, return status
+  await prisma.post.delete({
+    where: {
+      id,
+    },
+  });
 
-//   await prisma.task.delete({
-//     where: {
-//       id: itemId,
-//     },
-//   });
+  revalidatePath(path);
+}
 
-//   revalidatePath("/editor/" + path);
-// }
+export async function likeThread(id: string, userId: string, path: string) {
+  await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      likes: {
+        connect: {
+          postId_userId: {
+            postId: id,
+            userId,
+          },
+        },
+      },
+    },
+  });
+
+  revalidatePath(path);
+}
+
+export async function unlikeThread(id: string, userId: string, path: string) {
+  await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      likes: {
+        disconnect: {
+          postId_userId: {
+            postId: id,
+            userId,
+          },
+        },
+      },
+    },
+  });
+
+  revalidatePath(path);
+}
