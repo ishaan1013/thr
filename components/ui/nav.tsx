@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { SignOutButton } from "@clerk/nextjs";
 
 import { Edit, Heart, Home, Search, User2 } from "lucide-react";
 import { Modal } from "../thread/create";
@@ -27,11 +28,13 @@ export default function Nav() {
           }`}
         />
       </Link>
-      <Link href="/profile">
+      {/* <Link href="/profile"> */}
+      <SignOutButton>
         <User2
           className={`w-6 h-6 ${path === "/profile" ? "" : "text-neutral-600"}`}
         />
-      </Link>
+      </SignOutButton>
+      {/* </Link> */}
     </div>
   );
 }
