@@ -16,8 +16,8 @@ model Post {
   text       String
   author     User     @relation("Author", fields: [authorId], references: [id])
   authorId   String
-  reposter   User     @relation("Reposter", fields: [reposterId], references: [id])
-  reposterId String
+  reposter   User?    @relation("Reposter", fields: [reposterId], references: [id])
+  reposterId String?
   createdAt  DateTime @default(now())
   likes      Likes[]
 
@@ -28,7 +28,9 @@ model Post {
 
 model User {
   id         String  @id
+  username   String  @unique
   name       String?
+  bio        String?
   posts      Post[]  @relation("Author")
   reposts    Post[]  @relation("Reposter")
   likes      Likes[]
