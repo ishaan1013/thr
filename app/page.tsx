@@ -22,7 +22,10 @@ export default function Page() {
       </div>
       <Item others={[]} />
       <Item others={["1", "2", "3"]} />
+      <Item others={[]} />
+      <Item others={["1", "2"]} />
       <Item others={["1"]} />
+      <Item others={["1", "2"]} />
       <div className="w-full py-4 flex justify-center">
         <Button variant="outline">Load More</Button>
       </div>
