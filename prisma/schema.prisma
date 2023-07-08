@@ -1,0 +1,46 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+}
+
+model Post {
+  id         String   @id @default(cuid())
+  text       String
+  author     User     @relation("Author", fields: [authorId], references: [id])
+  authorId   String
+  reposter   User     @relation("Reposter", fields: [reposterId], references: [id])
+  reposterId String
+  createdAt  DateTime @default(now())
+  likes      Likes[]
+
+  parentId String?
+  parent   Post?   @relation("ParentChildren", fields: [parentId], references: [id])
+  children Post[]  @relation("ParentChildren")
+}
+
+model User {
+  id         String  @id
+  name       String?
+  posts      Post[]  @relation("Author")
+  reposts    Post[]  @relation("Reposter")
+  likes      Likes[]
+  followedBy User[]  @relation("UserFollows")
+  following  User[]  @relation("UserFollows")
+}
+
+model Likes {
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@id([postId, userId])
+}
