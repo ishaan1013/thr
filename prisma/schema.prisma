@@ -37,9 +37,9 @@ model Repost {
 model User {
   id         String   @id
   username   String   @unique
-  name       String?
+  name       String
   image      String
-  bio        String?
+  bio        String
   posts      Post[]
   reposts    Repost[]
   likes      Likes[]

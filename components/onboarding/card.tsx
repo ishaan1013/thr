@@ -7,15 +7,21 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
 export function OnboardingProfileCard({
-  userId,
+  userData,
   next,
 }: {
-  userId: string;
+  userData: {
+    id: string;
+    username: string;
+    name: string;
+    bio: string;
+    image: string;
+  };
   next: () => void;
 }) {
-  const [username, setUsername] = useState(userId.slice(5));
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
+  const [username, setUsername] = useState(userData.username);
+  const [name, setName] = useState(userData.name);
+  const [bio, setBio] = useState(userData.bio);
 
   return (
     <>

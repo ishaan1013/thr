@@ -6,7 +6,17 @@ import { OnboardingProfileCard } from ".";
 import { PrivacySelectCards } from "./privacy";
 import { Button } from "../ui/button";
 
-export function Screens({ userId }: { userId: string }) {
+export function Screens({
+  userData,
+}: {
+  userData: {
+    id: string;
+    username: string;
+    name: string;
+    bio: string;
+    image: string;
+  };
+}) {
   const [screen, setScreen] = useState(0);
 
   const nextScreen = () => setScreen((prev) => prev + 1);
@@ -25,7 +35,7 @@ export function Screens({ userId }: { userId: string }) {
           </div>
         </div>
 
-        <OnboardingProfileCard userId={userId} next={nextScreen} />
+        <OnboardingProfileCard userData={userData} next={nextScreen} />
       </>
     );
   }
