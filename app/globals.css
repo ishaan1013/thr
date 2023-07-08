@@ -61,3 +61,36 @@ body {
 .mini-horizontal-scroll::-webkit-scrollbar-thumb:hover {
   background: #525252;
 }
+
+.gradient {
+  background: radial-gradient(
+      circle farthest-corner at 35% 90%,
+      #eba93b,
+      transparent 50%
+    ),
+    radial-gradient(circle farthest-corner at 0 140%, #eba93b, transparent 50%),
+    radial-gradient(ellipse farthest-corner at 0 -25%, #373ecc, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 20% -50%,
+      #373ecc,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 0, #7c26bd, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 60% -20%,
+      #7c26bd,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 100%, #de1d71, transparent),
+    linear-gradient(
+      #5244c7,
+      #c72893 30%,
+      #de2c4f 50%,
+      #f06826 70%,
+      #f2b657 100%
+    );
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
