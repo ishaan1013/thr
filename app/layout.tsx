@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/ui/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import Nav from "@/components/ui/nav";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,21 +18,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        {" "}
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <>
-            <main className="w-screen flex justify-center bg-neutral-950">
-              <Nav />
-              <div className="min-h-screen text-base w-full max-w-[500px] bg-neutral-950 relative pb-14">
-                {children}
-              </div>
-            </main>
-            <Toaster />
-          </>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          {" "}
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <>
+              <main className="w-screen flex justify-center bg-neutral-950">
+                <Nav />
+                <div className="min-h-screen text-base w-full max-w-[500px] bg-neutral-950 relative pb-14">
+                  {children}
+                </div>
+              </main>
+              <Toaster />
+            </>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
