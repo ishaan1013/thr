@@ -45,6 +45,7 @@ model User {
   likes      Likes[]
   followedBy User[]   @relation("UserFollows")
   following  User[]   @relation("UserFollows")
+  onboarded  Boolean  @default(false)
 }
 
 model Likes {

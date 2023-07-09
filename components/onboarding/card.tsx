@@ -7,10 +7,12 @@ import { Label } from "@/components/ui/label";
 import { onboardData } from "@/lib/actions";
 import { useState, useTransition } from "react";
 import { useToast } from "../ui/use-toast";
+import { AlertCircle } from "lucide-react";
 
 export function OnboardingProfileCard({
   userData,
   next,
+  allUsernames,
 }: {
   userData: {
     id: string;
@@ -20,6 +22,7 @@ export function OnboardingProfileCard({
     image: string;
   };
   next: () => void;
+  allUsernames: string[];
 }) {
   const [isPending, startTransition] = useTransition();
 
@@ -43,6 +46,17 @@ export function OnboardingProfileCard({
                   id="username"
                   placeholder="Your unique username"
                 />
+                {allUsernames.includes(username) ? (
+                  <div className="text-red-500 text-sm flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1" /> Username is taken.
+                  </div>
+                ) : null}
+                {username.length === 0 ? (
+                  <div className="text-red-500 text-sm flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1" /> Username cannot be
+                    empty.
+                  </div>
+                ) : null}
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Name</Label>
@@ -52,6 +66,12 @@ export function OnboardingProfileCard({
                   id="name"
                   placeholder="Name displayed on your profile"
                 />
+                {name.length === 0 ? (
+                  <div className="text-red-500 text-sm flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1" /> Your name cannot be
+                    empty.
+                  </div>
+                ) : null}
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="bio">Bio</Label>
@@ -68,7 +88,9 @@ export function OnboardingProfileCard({
       </Card>
       <Button
         onClick={() => {
-          startTransition(() => onboardData(username, name, bio, userData.id));
+          startTransition(() =>
+            onboardData(username, name, bio, userData.image, userData.id)
+          );
           toast({
             title: "Updated user data",
           });
@@ -76,6 +98,11 @@ export function OnboardingProfileCard({
         }}
         variant="secondary"
         className="w-full mt-6"
+        disabled={
+          name.length === 0 ||
+          username.length === 0 ||
+          allUsernames.includes(username)
+        }
       >
         Continue
       </Button>

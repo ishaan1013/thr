@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 
 export function Screens({
   userData,
+  allUsernames,
 }: {
   userData: {
     id: string;
@@ -16,6 +17,9 @@ export function Screens({
     bio: string;
     image: string;
   };
+  allUsernames: {
+    username: string;
+  }[];
 }) {
   const [screen, setScreen] = useState(0);
 
@@ -35,7 +39,11 @@ export function Screens({
           </div>
         </div>
 
-        <OnboardingProfileCard userData={userData} next={nextScreen} />
+        <OnboardingProfileCard
+          allUsernames={allUsernames.map((user) => user.username)}
+          userData={userData}
+          next={nextScreen}
+        />
       </>
     );
   }

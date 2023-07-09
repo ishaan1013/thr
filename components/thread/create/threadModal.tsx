@@ -1,11 +1,8 @@
 "use client";
 
-import Item from "@/components/thread";
-
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,

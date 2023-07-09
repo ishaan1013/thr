@@ -1,16 +1,32 @@
 "use client";
 
+import { createThread } from "@/lib/actions";
 import { Button } from "../../ui/button";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 export function Create() {
   const [thread, setThread] = useState("");
+  const { user } = useUser();
+
+  const [isPending, startTransition] = useTransition();
+
+  if (!user) return null;
 
   return (
     <div>
       <div className="space-x-2 flex font-light">
         <div className="flex flex-col items-center justify-start">
-          <div className="w-8 h-8 rounded-full bg-lime-700"></div>
+          <div className="w-8 h-8 rounded-full bg-neutral-600 overflow-hidden">
+            <Image
+              src={user.imageUrl}
+              height={32}
+              width={32}
+              className=""
+              alt={user.firstName + "'s profile image"}
+            />
+          </div>
           <div className="w-0.5 grow mt-2 rounded-full bg-neutral-700" />
         </div>
         <div className="w-full">
@@ -35,6 +51,7 @@ export function Create() {
         disabled={thread.length === 0}
         variant="outline"
         className="w-full mt-4"
+        onClick={() => startTransition(() => createThread(thread, user.id, ""))}
       >
         Post
       </Button>

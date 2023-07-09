@@ -2,6 +2,7 @@ import SearchUI from "@/components/search";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
+import Nav from "@/components/ui/nav";
 
 export const revalidate = 0;
 
@@ -14,6 +15,16 @@ export default async function SearchPage({
 
   if (!user) {
     redirect("/sign-in");
+  }
+
+  const getUser = await prisma.user.findUnique({
+    where: {
+      id: user?.id,
+    },
+  });
+
+  if (!getUser?.onboarded) {
+    redirect("/onboarding");
   }
 
   if (searchParams?.q) {
@@ -68,5 +79,11 @@ export default async function SearchPage({
     },
   });
 
-  return <SearchUI users={users} />;
+  return (
+    <>
+      <Nav />
+
+      <SearchUI users={users} />
+    </>
+  );
 }

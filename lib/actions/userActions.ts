@@ -52,16 +52,17 @@ export async function onboardData(
   username: string,
   name: string,
   bio: string,
+  image: string,
   userId: string
 ) {
-  await prisma.user.update({
-    where: {
-      id: userId,
-    },
+  await prisma.user.create({
     data: {
+      id: userId,
       username: username.toLowerCase(),
       name,
       bio,
+      image,
+      onboarded: true,
     },
   });
 }

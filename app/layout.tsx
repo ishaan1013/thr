@@ -35,7 +35,7 @@ export default function RootLayout({
             {userId ? (
               <>
                 <main className="w-screen flex justify-center bg-neutral-950">
-                  <Nav />
+                  {/* <Nav /> */}
                   <div className="min-h-screen text-base w-full max-w-[500px] bg-neutral-950 relative pb-14">
                     {children}
                   </div>

@@ -4,11 +4,13 @@ import prisma from "@/lib/prisma";
 import { Screens } from "@/components/onboarding";
 import { redirect } from "next/navigation";
 
+export const revalidate = 0;
+
 export default async function OnboardingLayout() {
   const user = await currentUser();
 
   if (!user) {
-    redirect("/sign-in");
+    redirect("/sign-up");
   }
 
   const getUser = await prisma.user.findUnique({
@@ -16,6 +18,10 @@ export default async function OnboardingLayout() {
       id: user.id,
     },
   });
+
+  if (getUser?.onboarded) {
+    redirect("/");
+  }
 
   const userData = {
     id: user.id,
@@ -25,15 +31,17 @@ export default async function OnboardingLayout() {
     image: getUser ? getUser.image : user.imageUrl,
   };
 
-  if (!getUser) {
-    await prisma.user.create({
-      data: userData,
-    });
-  }
+  const allUsernames = await prisma.user.findMany({
+    select: {
+      username: true,
+    },
+  });
 
   return (
     <div className="px-3 pt-8">
-      {user ? <Screens userData={userData} /> : null}
+      {user ? (
+        <Screens allUsernames={allUsernames} userData={userData} />
+      ) : null}
     </div>
   );
 }

@@ -5,15 +5,17 @@ import Item from "@/components/thread";
 import logo from "@/assets/threads.svg";
 import { Button } from "@/components/ui/button";
 
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import prisma from "@/lib/prisma";
+import Nav from "@/components/ui/nav";
+import { redirect } from "next/navigation";
 
 export const revalidate = 0;
 
 export default async function Page() {
-  const { userId } = auth();
+  const user = await currentUser();
 
-  if (!userId)
+  if (!user)
     return (
       <>
         <div className="h-16 w-16 bg-cover">
@@ -38,6 +40,16 @@ export default async function Page() {
       </>
     );
 
+  const getUser = await prisma.user.findUnique({
+    where: {
+      id: user?.id,
+    },
+  });
+
+  if (!getUser?.onboarded) {
+    redirect("/onboarding");
+  }
+
   const posts = await prisma.post.findMany({
     take: 10,
     orderBy: {
@@ -53,6 +65,7 @@ export default async function Page() {
 
   return (
     <>
+      <Nav />
       <div className="flex items-center justify-center w-full py-5">
         <div className="h-9 w-9 bg-cover">
           <Image
