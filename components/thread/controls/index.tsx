@@ -1,14 +1,14 @@
 "use client";
 
-import { Heart } from "lucide-react";
-import { useState } from "react";
 import Share from "./share";
 import { Modal } from "../comment";
 import Repost from "./repost";
 import { Prisma } from "@prisma/client";
+import Like from "./like";
 
 export default function Controls({
   data,
+  numPosts,
 }: {
   data: Prisma.PostGetPayload<{
     include: {
@@ -18,17 +18,13 @@ export default function Controls({
       likes: true;
     };
   }>;
+  numPosts?: number;
 }) {
-  const [liked, setLiked] = useState(false);
+  const likes = data.likes.map((like) => like.userId);
 
   return (
     <div className="flex items-center space-x-3.5 py-2">
-      <button
-        onClick={() => setLiked(!liked)}
-        className={`w-5 duration-200 h-5 ${liked ? "text-red-600" : ""}`}
-      >
-        <Heart fill={liked ? "#dc2626" : "#0a0a0a"} className="w-5 h-5" />
-      </button>
+      <Like likes={likes} numPosts={numPosts} post={data.id} />
       <Modal data={data} />
       <Repost />
       <Share />

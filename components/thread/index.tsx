@@ -11,6 +11,7 @@ import updateLocale from "dayjs/plugin/updateLocale";
 export default function Item({
   data,
   comment = false,
+  posts,
 }: {
   data: Prisma.PostGetPayload<{
     include: {
@@ -21,20 +22,28 @@ export default function Item({
     };
   }>;
   comment?: boolean;
+  posts?: Prisma.PostGetPayload<{
+    include: {
+      author: true;
+      children: true;
+      parent: true;
+      likes: true;
+    };
+  }>[];
 }) {
   const mainClass = comment
     ? "space-x-2 flex font-light"
     : "px-3 py-4 space-x-2 flex border-b font-light border-neutral-900";
 
   dayjs.extend(relativeTime);
-  const ago = dayjs(data.createdAt).fromNow(true);
+  const ago = dayjs(data.createdAt).fromNow();
 
   dayjs.extend(updateLocale);
 
   dayjs.updateLocale("en", {
     relativeTime: {
       future: "in %s",
-      past: "%s ago",
+      past: "%s",
       s: "now",
       m: "1m",
       mm: "%dm",
@@ -87,7 +96,7 @@ export default function Item({
 
         {comment ? null : (
           <>
-            <Controls data={data} />
+            <Controls numPosts={posts ? posts.length : -1} data={data} />
 
             <div className="flex text-neutral-600 items-center space-x-2">
               {data.children.length > 0 ? (
@@ -96,7 +105,7 @@ export default function Item({
                   {data.children.length === 1 ? "reply" : "replies"}
                 </div>
               ) : null}
-              {data.children.length > 0 || data.likes.length > 0 ? (
+              {data.children.length > 0 && data.likes.length > 0 ? (
                 <div className="w-1 h-1 rounded-full bg-neutral-600" />
               ) : null}
               {data.likes.length > 0 ? (

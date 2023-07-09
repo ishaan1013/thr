@@ -76,7 +76,7 @@ export default async function Page() {
         </div>
       </div>
       {posts.map((post) => {
-        return <Item data={post} />;
+        return <Item key={post.id} posts={posts} data={post} />;
       })}
       <div className="w-full py-4 flex justify-center">
         {posts.length === 0 ? (

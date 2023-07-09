@@ -83,6 +83,23 @@ export async function deleteThread(id: string, path: string) {
 }
 
 export async function likeThread(id: string, userId: string, path: string) {
+  console.log("likeThread", id, userId, path);
+
+  await prisma.likes.create({
+    data: {
+      post: {
+        connect: {
+          id,
+        },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+
   await prisma.post.update({
     where: {
       id,
@@ -103,18 +120,27 @@ export async function likeThread(id: string, userId: string, path: string) {
 }
 
 export async function unlikeThread(id: string, userId: string, path: string) {
-  await prisma.post.update({
+  // await prisma.post.update({
+  //   where: {
+  //     id,
+  //   },
+  //   data: {
+  //     likes: {
+  //       disconnect: {
+  //         postId_userId: {
+  //           postId: id,
+  //           userId,
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
+
+  await prisma.likes.delete({
     where: {
-      id,
-    },
-    data: {
-      likes: {
-        disconnect: {
-          postId_userId: {
-            postId: id,
-            userId,
-          },
-        },
+      postId_userId: {
+        postId: id,
+        userId,
       },
     },
   });
