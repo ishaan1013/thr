@@ -1,8 +1,10 @@
+import Image from "next/image";
+import Link from "next/link";
+
 import Others from "./others";
 import MoreMenu from "./moreMenu";
 import Controls from "./controls";
 import { Post, Prisma } from "@prisma/client";
-import Image from "next/image";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
@@ -16,7 +18,11 @@ export default function Item({
   data: Prisma.PostGetPayload<{
     include: {
       author: true;
-      children: true;
+      children: {
+        include: {
+          author: true;
+        };
+      };
       parent: true;
       likes: true;
     };
@@ -25,7 +31,11 @@ export default function Item({
   posts?: Prisma.PostGetPayload<{
     include: {
       author: true;
-      children: true;
+      children: {
+        include: {
+          author: true;
+        };
+      };
       parent: true;
       likes: true;
     };
@@ -59,7 +69,7 @@ export default function Item({
   });
 
   return (
-    <div className={mainClass}>
+    <Link href={`/posts/${data.id}`} className={mainClass}>
       <div className="flex flex-col items-center justify-between">
         <div className="w-8 h-8 mt-1 rounded-full bg-neutral-600 overflow-hidden">
           <Image
@@ -83,7 +93,6 @@ export default function Item({
             </div>
           )}
         </div>
-
         <div
           className={
             comment
@@ -93,11 +102,9 @@ export default function Item({
         >
           {data.text}
         </div>
-
         {comment ? null : (
           <>
             <Controls numPosts={posts ? posts.length : -1} data={data} />
-
             <div className="flex text-neutral-600 items-center space-x-2">
               {data.children.length > 0 ? (
                 <div>
@@ -118,6 +125,6 @@ export default function Item({
           </>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

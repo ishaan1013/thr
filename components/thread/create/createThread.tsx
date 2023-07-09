@@ -53,7 +53,7 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
             className="mt-1 mini-scrollbar text-base/relaxed resize-none h-16 bg-transparent w-full placeholder:text-neutral-600 pb-1 outline-none focus:border-b border-b-neutral-700"
             placeholder="Start a thread..."
           />
-          <div className="mt-1 text-end font-semibold text-xs text-neutral-600">
+          <div className="mt-1 text-end font-medium text-xs text-neutral-600">
             {thread.length}/200
           </div>
           {/* for adding attachments in the future */}

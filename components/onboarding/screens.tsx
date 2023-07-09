@@ -52,7 +52,7 @@ export function Screens({
       <Button
         onClick={() => setScreen(0)}
         className="pl-2.5 mb-24"
-        variant="outline"
+        variant="ghost"
       >
         <ChevronLeft className="w-4 h-4 mr-1" /> Back
       </Button>

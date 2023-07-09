@@ -57,9 +57,16 @@ export default async function Page() {
     },
     include: {
       author: true,
-      children: true,
+      children: {
+        include: {
+          author: true,
+        },
+      },
       parent: true,
       likes: true,
+    },
+    where: {
+      parent: null,
     },
   });
 
