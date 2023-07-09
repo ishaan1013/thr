@@ -13,6 +13,7 @@ import {
 import { MessageCircle } from "lucide-react";
 import { Create } from ".";
 import { Prisma } from "@prisma/client";
+import { useState } from "react";
 
 export function Modal({
   data,
@@ -30,8 +31,10 @@ export function Modal({
     };
   }>;
 }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <MessageCircle className="w-5 h-5" />
       </DialogTrigger>
@@ -40,7 +43,7 @@ export function Modal({
           <DialogTitle className="mb-3">Reply</DialogTitle>
         </DialogHeader>
         <Item data={data} comment />
-        <Create />
+        <Create setOpen={setOpen} itemData={data} />
       </DialogContent>
     </Dialog>
   );

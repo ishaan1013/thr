@@ -22,7 +22,7 @@ export async function createThread(
   revalidatePath(path);
 }
 
-export async function commentOnThread(
+export async function replyToThread(
   text: string,
   authorId: string,
   threadId: string,
