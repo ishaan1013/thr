@@ -19,9 +19,7 @@ export async function createThread(
     },
   });
 
-  if (path === "/" || path.startsWith("/@")) {
-    revalidatePath(path);
-  }
+  revalidatePath(path);
 }
 
 export async function commentOnThread(

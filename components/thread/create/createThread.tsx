@@ -2,17 +2,30 @@
 
 import { createThread } from "@/lib/actions";
 import { Button } from "../../ui/button";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 
-export function Create() {
-  const [thread, setThread] = useState("");
-  const { user } = useUser();
+import { usePathname } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
+export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
+  const [thread, setThread] = useState("");
+  const [clicked, setClicked] = useState(false);
+
+  const { user } = useUser();
   const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
 
   if (!user) return null;
+
+  useEffect(() => {
+    if (clicked && !isPending) {
+      setThread("");
+      setOpen(false);
+      setClicked(false);
+    }
+  }, [isPending]);
 
   return (
     <div>
@@ -48,12 +61,19 @@ export function Create() {
         </div>
       </div>
       <Button
-        disabled={thread.length === 0}
+        disabled={thread.length === 0 || isPending}
         variant="outline"
         className="w-full mt-4"
-        onClick={() => startTransition(() => createThread(thread, user.id, ""))}
+        onClick={() => {
+          startTransition(() => createThread(thread, user.id, pathname));
+          setClicked(true);
+        }}
       >
-        Post
+        {isPending ? (
+          <Loader2 className="h-4 w-4 animate-spin text-neutral-600" />
+        ) : (
+          "Post"
+        )}
       </Button>
       {/* <div className="flex justify"></div> */}
     </div>

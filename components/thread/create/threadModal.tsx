@@ -9,10 +9,13 @@ import {
 } from "@/components/ui/dialog";
 import { Edit } from "lucide-react";
 import { Create } from ".";
+import { useState } from "react";
 
 export function Modal() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Edit className={`w-[22px] h-[22px] text-neutral-600`} />
       </DialogTrigger>
@@ -20,7 +23,7 @@ export function Modal() {
         <DialogHeader>
           <DialogTitle className="mb-3">New Thread</DialogTitle>
         </DialogHeader>
-        <Create />
+        <Create setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );
