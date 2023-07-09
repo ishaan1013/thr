@@ -4,6 +4,10 @@ import Controls from "./controls";
 import { Post, Prisma } from "@prisma/client";
 import Image from "next/image";
 
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+import updateLocale from "dayjs/plugin/updateLocale";
+
 export default function Item({
   data,
   comment = false,
@@ -21,6 +25,29 @@ export default function Item({
   const mainClass = comment
     ? "space-x-2 flex font-light"
     : "px-3 py-4 space-x-2 flex border-b font-light border-neutral-900";
+
+  dayjs.extend(relativeTime);
+  const ago = dayjs(data.createdAt).fromNow(true);
+
+  dayjs.extend(updateLocale);
+
+  dayjs.updateLocale("en", {
+    relativeTime: {
+      future: "in %s",
+      past: "%s ago",
+      s: "now",
+      m: "1m",
+      mm: "%dm",
+      h: "1h",
+      hh: "%dh",
+      d: "1d",
+      dd: "%dd",
+      M: "1m",
+      MM: "%dm",
+      y: "1y",
+      yy: "%dy",
+    },
+  });
 
   return (
     <div className={mainClass}>
@@ -42,7 +69,7 @@ export default function Item({
           <div className="font-semibold">{data.author.name}</div>
           {comment ? null : (
             <div className="flex items-center space-x-2">
-              <div className="text-neutral-600">23m</div>
+              <div className="text-neutral-600">{ago}</div>
               <MoreMenu />
             </div>
           )}
