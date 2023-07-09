@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { onboardData } from "@/lib/actions";
+import { useState, useTransition } from "react";
+import { useToast } from "../ui/use-toast";
 
 export function OnboardingProfileCard({
   userData,
@@ -19,9 +21,13 @@ export function OnboardingProfileCard({
   };
   next: () => void;
 }) {
+  const [isPending, startTransition] = useTransition();
+
   const [username, setUsername] = useState(userData.username);
   const [name, setName] = useState(userData.name);
   const [bio, setBio] = useState(userData.bio);
+
+  const { toast } = useToast();
 
   return (
     <>
@@ -60,7 +66,17 @@ export function OnboardingProfileCard({
           </form>
         </CardContent>
       </Card>
-      <Button onClick={next} variant="secondary" className="w-full mt-6">
+      <Button
+        onClick={() => {
+          startTransition(() => onboardData(username, name, bio, userData.id));
+          toast({
+            title: "Updated user data",
+          });
+          next();
+        }}
+        variant="secondary"
+        className="w-full mt-6"
+      >
         Continue
       </Button>
     </>
