@@ -8,7 +8,7 @@ export default async function OnboardingLayout() {
   const user = await currentUser();
 
   if (!user) {
-    redirect("/login");
+    redirect("/sign-in");
   }
 
   const getUser = await prisma.user.findUnique({

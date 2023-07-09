@@ -12,8 +12,20 @@ import {
 } from "@/components/ui/dialog";
 import { MessageCircle } from "lucide-react";
 import { Create } from ".";
+import { Prisma } from "@prisma/client";
 
-export function Modal() {
+export function Modal({
+  data,
+}: {
+  data: Prisma.PostGetPayload<{
+    include: {
+      author: true;
+      children: true;
+      parent: true;
+      likes: true;
+    };
+  }>;
+}) {
   return (
     <Dialog>
       <DialogTrigger>
@@ -23,7 +35,7 @@ export function Modal() {
         <DialogHeader>
           <DialogTitle className="mb-3">Reply</DialogTitle>
         </DialogHeader>
-        <Item comment others={[]} />
+        <Item data={data} comment />
         <Create />
       </DialogContent>
     </Dialog>

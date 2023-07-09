@@ -87,7 +87,7 @@ export default function Item({
 
         {comment ? null : (
           <>
-            <Controls />
+            <Controls data={data} />
 
             <div className="flex text-neutral-600 items-center space-x-2">
               {data.children.length > 0 ? (

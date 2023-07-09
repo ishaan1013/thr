@@ -13,7 +13,7 @@ export async function changeUsername(
       id: userId,
     },
     data: {
-      username,
+      username: username.toLowerCase(),
     },
   });
 
@@ -59,7 +59,7 @@ export async function onboardData(
       id: userId,
     },
     data: {
-      username,
+      username: username.toLowerCase(),
       name,
       bio,
     },

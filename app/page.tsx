@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs";
 import prisma from "@/lib/prisma";
 
+export const revalidate = 0;
+
 export default async function Page() {
   const { userId } = auth();
 
