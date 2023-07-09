@@ -1,4 +1,6 @@
-export default function Others({ others }: { others: string[] }) {
+import { Post } from "@prisma/client";
+
+export default function Others({ others }: { others: Post[] }) {
   if (others.length === 0) {
     return null;
   }

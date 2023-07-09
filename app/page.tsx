@@ -6,8 +6,9 @@ import logo from "@/assets/threads.svg";
 import { Button } from "@/components/ui/button";
 
 import { auth } from "@clerk/nextjs";
+import prisma from "@/lib/prisma";
 
-export default function Page() {
+export default async function Page() {
   const { userId } = auth();
 
   if (!userId)
@@ -35,6 +36,19 @@ export default function Page() {
       </>
     );
 
+  const posts = await prisma.post.findMany({
+    take: 10,
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      author: true,
+      children: true,
+      parent: true,
+      likes: true,
+    },
+  });
+
   return (
     <>
       <div className="flex items-center justify-center w-full py-5">
@@ -46,14 +60,18 @@ export default function Page() {
           />
         </div>
       </div>
-      <Item others={[]} />
-      <Item others={["1", "2", "3"]} />
-      <Item others={[]} />
-      <Item others={["1", "2"]} />
-      <Item others={["1"]} />
-      <Item others={["1", "2"]} />
+      {posts.map((post) => {
+        return <Item data={post} />;
+      })}
       <div className="w-full py-4 flex justify-center">
-        <Button variant="outline">Load More</Button>
+        {posts.length === 0 ? (
+          <div className="text-neutral-600 mt-4 text-center leading-loose">
+            There are no threads... <br />
+            Try making one!
+          </div>
+        ) : posts.length <= 20 ? null : (
+          <Button variant="outline">Load More</Button>
+        )}
       </div>
     </>
     // </div>
