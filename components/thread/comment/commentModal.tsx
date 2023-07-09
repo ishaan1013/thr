@@ -20,7 +20,11 @@ export function Modal({
   data: Prisma.PostGetPayload<{
     include: {
       author: true;
-      children: true;
+      children: {
+        include: {
+          author: true;
+        };
+      };
       parent: true;
       likes: true;
     };

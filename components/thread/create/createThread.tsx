@@ -17,8 +17,6 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
 
-  if (!user) return null;
-
   useEffect(() => {
     if (clicked && !isPending) {
       setThread("");
@@ -26,6 +24,8 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
       setClicked(false);
     }
   }, [isPending]);
+
+  if (!user) return null;
 
   return (
     <div>

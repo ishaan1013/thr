@@ -18,7 +18,11 @@ export default async function ThreadPage({
       children: {
         include: {
           author: true,
-          children: true,
+          children: {
+            include: {
+              author: true,
+            },
+          },
           parent: true,
           likes: true,
         },
