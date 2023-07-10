@@ -1,14 +1,33 @@
 import BackButton from "@/components/thread/backButton";
 import { Button } from "@/components/ui/button";
 import Nav from "@/components/ui/nav";
+import { currentUser } from "@clerk/nextjs";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import prisma from "@/lib/prisma";
 
-export default function ThreadPageLayout({
+export default async function ThreadPageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await currentUser();
+
+  if (!user) {
+    redirect("/sign-in");
+  }
+
+  const getUser = await prisma.user.findUnique({
+    where: {
+      id: user?.id,
+    },
+  });
+
+  if (!getUser?.onboarded) {
+    redirect("/onboarding");
+  }
+
   return (
     <>
       <Nav />

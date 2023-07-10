@@ -42,11 +42,11 @@ export default function Others({
         </div>
         <div className="w-4 h-4 rounded-full bg-neutral-500 absolute bottom-0 right-0 overflow-hidden">
           <Image
-            src={others[0].author.image}
+            src={others[1].author.image}
             height={16}
             width={16}
             className=""
-            alt={others[0].author.name + "'s profile image"}
+            alt={others[1].author.name + "'s profile image"}
           />
         </div>
       </div>
@@ -65,20 +65,20 @@ export default function Others({
       </div>
       <div className="w-3.5 h-3.5 rounded-full bg-neutral-500 absolute top-[15%] right-0 overflow-hidden">
         <Image
-          src={others[0].author.image}
+          src={others[1].author.image}
           height={14}
           width={14}
           className=""
-          alt={others[0].author.name + "'s profile image"}
+          alt={others[1].author.name + "'s profile image"}
         />
       </div>
       <div className="w-3.5 h-3.5 rounded-full bg-neutral-500 absolute bottom-0 left-[15%] overflow-hidden">
         <Image
-          src={others[0].author.image}
+          src={others[2].author.image}
           height={14}
           width={14}
           className=""
-          alt={others[0].author.name + "'s profile image"}
+          alt={others[2].author.name + "'s profile image"}
         />
       </div>
     </div>

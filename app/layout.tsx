@@ -31,7 +31,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           {" "}
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="dark">
             {userId ? (
               <>
                 <main className="w-screen flex justify-center bg-neutral-950">

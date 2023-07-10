@@ -34,22 +34,25 @@ export function Modal({
   const [open, setOpen] = useState(false);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger
+    <>
+      <button
         onClick={(e) => {
+          e.preventDefault();
           e.stopPropagation();
           setOpen((prev) => !prev);
         }}
       >
         <MessageCircle className="w-5 h-5" />
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="mb-3">Reply</DialogTitle>
-        </DialogHeader>
-        <Item data={data} comment />
-        <Create setOpen={setOpen} itemData={data} />
-      </DialogContent>
-    </Dialog>
+      </button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="mb-3">Reply</DialogTitle>
+          </DialogHeader>
+          <Item data={data} noLink comment />
+          <Create setOpen={setOpen} itemData={data} />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

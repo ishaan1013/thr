@@ -28,7 +28,7 @@ export function Screens({
   if (screen === 0) {
     return (
       <>
-        <div className="w-full flex h-10 items-center justify-end mb-24">
+        <div className="w-full flex h-10 items-center justify-end mb-16">
           {/* Skip <ChevronRight className="w-4 h-4 ml-2" /> */}
         </div>
 
@@ -51,7 +51,7 @@ export function Screens({
     <>
       <Button
         onClick={() => setScreen(0)}
-        className="pl-2.5 mb-24"
+        className="pl-2.5 mb-16"
         variant="ghost"
       >
         <ChevronLeft className="w-4 h-4 mr-1" /> Back
