@@ -6,7 +6,6 @@ import { dark } from "@clerk/themes";
 
 import { ThemeProvider } from "@/components/ui/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
-import Nav from "@/components/ui/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +34,6 @@ export default function RootLayout({
             {userId ? (
               <>
                 <main className="w-screen flex justify-center bg-neutral-950">
-                  {/* <Nav /> */}
                   <div className="min-h-screen text-base w-full max-w-[500px] bg-neutral-950 relative pb-14">
                     {children}
                   </div>

@@ -40,7 +40,7 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
               alt={user.firstName + "'s profile image"}
             />
           </div>
-          <div className="w-0.5 grow mt-2 rounded-full bg-neutral-700" />
+          <div className="w-0.5 grow mt-2 rounded-full bg-neutral-800" />
         </div>
         <div className="w-full">
           <div className="font-semibold text-left">Me</div>

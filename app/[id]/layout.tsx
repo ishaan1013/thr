@@ -1,11 +1,14 @@
-import Nav from "@/components/ui/nav";
-import { Globe, Instagram, Menu } from "lucide-react";
-
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+
+import Nav from "@/components/ui/nav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Globe, Instagram, MoreHorizontal } from "lucide-react";
+
+import logo from "@/assets/threads.svg";
 
 export default async function ProfilePageLayout({
   children,
@@ -18,9 +21,19 @@ export default async function ProfilePageLayout({
 
   if (!user) return null;
 
-  const getUser = await prisma.user.findUnique({
+  const getSelf = await prisma.user.findUnique({
     where: {
       id: user.id,
+    },
+  });
+
+  if (!getSelf?.onboarded) {
+    redirect("/onboarding");
+  }
+
+  const getUser = await prisma.user.findUnique({
+    where: {
+      username: params.id,
     },
     include: {
       followedBy: true,
@@ -28,19 +41,39 @@ export default async function ProfilePageLayout({
   });
 
   if (!getUser) {
-    return null;
+    return (
+      <>
+        <Nav username={null} />
+        <div className="flex items-center justify-center w-full py-5">
+          <div className="h-9 w-9 bg-cover">
+            <Image
+              src={logo}
+              alt="Threads logo"
+              className="min-h-full invert min-w-full object-cover"
+            />
+          </div>
+        </div>
+        <div className="font-semibold text-center mt-24">
+          Sorry, this page isn't available
+        </div>
+        <div className="text-center text-neutral-600 mt-4">
+          The link you followed may be broken, or the page may have been
+          removed.
+        </div>
+      </>
+    );
   }
 
   const self = getUser.username === params.id;
 
   return (
     <>
-      <Nav />
+      <Nav username={getSelf.username} />
       <div className="px-3 relative flex w-full items-center justify-between mt-8 mb-6">
         <Globe className="w-5 h-5" />
         <div className="flex items-center space-x-3">
           <Instagram className="w-5 h-5" />
-          <Menu className="w-5 h-5" />
+          <MoreHorizontal className="w-5 h-5" />
         </div>
       </div>
       <div className="px-3 flex w-full justify-between items-start">
@@ -49,7 +82,7 @@ export default async function ProfilePageLayout({
           <div className="flex items-center mt-1">
             {getUser.username}
             <Badge variant="secondary" className="text-xs ml-2">
-              Threads.net
+              threads.net
             </Badge>
           </div>
           <div className="py-4 text-neutral-600">
@@ -68,7 +101,7 @@ export default async function ProfilePageLayout({
       </div>
 
       {self ? (
-        <div className="w-full space-x-2 flex">
+        <div className="w-full space-x-2 flex px-3">
           <Button variant="outline" className="w-full">
             Edit Profile
           </Button>
@@ -77,18 +110,13 @@ export default async function ProfilePageLayout({
           </Button>
         </div>
       ) : (
-        <Button className="w-full" variant="outline">
-          Follow
-        </Button>
+        <div className="w-full px-3">
+          <Button className="w-full" variant="outline">
+            Follow
+          </Button>
+        </div>
       )}
-      <div className="w-full mt-4 flex">
-        <button className="w-full h-10 py-2 font-semibold border-b border-b-white text-center">
-          Threads
-        </button>
-        <button className="w-full h-10 py-2 font-medium border-b border-neutral-900 duration-200 hover:border-neutral-700 hover:text-neutral-500 text-center text-neutral-600">
-          Replies
-        </button>
-      </div>
+
       {children}
     </>
   );

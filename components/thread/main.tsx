@@ -1,11 +1,11 @@
 import Image from "next/image";
 
-import Others from "./others";
 import MoreMenu from "./moreMenu";
 import Controls from "./controls";
 import { Post, Prisma } from "@prisma/client";
 import { timeSince } from "@/lib/utils";
 import Timestamp from "./timestamp";
+import NameLink from "./nameLink";
 
 // import relativeTime from "dayjs/plugin/relativeTime";
 // import dayjs from "dayjs";
@@ -77,7 +77,7 @@ export default function MainItem({
               alt={data.author.name + "'s profile image"}
             />
           </div>
-          <div className="font-semibold">{data.author.name}</div>
+          <NameLink username={data.author.username} name={data.author.name} />
         </div>
         <div className="flex items-center space-x-2">
           {/* <Timestamp time={data.createdAt} /> */}

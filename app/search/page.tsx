@@ -81,7 +81,7 @@ export default async function SearchPage({
 
   return (
     <>
-      <Nav />
+      <Nav username={getUser.username} />
 
       <SearchUI users={users} />
     </>

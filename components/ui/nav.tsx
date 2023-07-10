@@ -7,7 +7,7 @@ import { SignOutButton } from "@clerk/nextjs";
 import { Edit, Heart, Home, Search, User2 } from "lucide-react";
 import { Modal } from "../thread/create";
 
-export default function Nav() {
+export default function Nav({ username }: { username: string | null }) {
   const path = usePathname();
 
   return (
@@ -28,13 +28,19 @@ export default function Nav() {
           }`}
         />
       </Link>
-      {/* <Link href="/profile"> */}
-      <SignOutButton>
-        <User2
-          className={`w-6 h-6 ${path === "/profile" ? "" : "text-neutral-600"}`}
-        />
-      </SignOutButton>
-      {/* </Link> */}
+      <Link href={`/${username}`}>
+        {/* <SignOutButton> */}
+        {username === null ? (
+          <User2 className="w-6 h-6 text-neutral-600" />
+        ) : (
+          <User2
+            className={`w-6 h-6 ${
+              path === `/${username}` ? "" : "text-neutral-600"
+            }`}
+          />
+        )}
+        {/* </SignOutButton> */}
+      </Link>
     </div>
   );
 }

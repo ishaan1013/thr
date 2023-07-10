@@ -13,6 +13,7 @@ import { Post, Prisma } from "@prisma/client";
 import loop from "@/assets/loop.svg";
 import { timeSince } from "@/lib/utils";
 import Timestamp from "./timestamp";
+import NameLink from "./nameLink";
 
 export default function Item({
   data,
@@ -94,7 +95,7 @@ export default function Item({
             />
           </div>
           <div
-            className={`w-0.5 grow mt-2 rounded-full bg-neutral-700 relative ${
+            className={`w-0.5 grow mt-2 rounded-full bg-neutral-800 relative ${
               parent ? "mb-5" : null
             }`}
           >
@@ -114,7 +115,8 @@ export default function Item({
         </div>
         <div className="w-full space-y-1">
           <div className="w-full flex items-center justify-between">
-            <div className="font-semibold">{data.author.name}</div>
+            <NameLink username={data.author.username} name={data.author.name} />
+
             {comment ? null : (
               <div className="flex items-center space-x-2">
                 {/* <Timestamp time={data.createdAt} /> */}

@@ -19,7 +19,7 @@ export default async function ActivityPage() {
 
   return (
     <>
-      <Nav />
+      <Nav username={getUser.username} />
 
       <div className="px-3 mb-1">
         <div className="text-2xl font-semibold pt-8 pb-5">Activity</div>
