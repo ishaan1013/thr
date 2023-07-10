@@ -56,7 +56,7 @@ export default async function ProfilePageLayout({
           </div>
         </div>
         <div className="font-semibold text-center mt-24">
-          Sorry, this page isn't available
+          Sorry, this page isn&apos;t available
         </div>
         <div className="text-center text-neutral-600 mt-4">
           The link you followed may be broken, or the page may have been
