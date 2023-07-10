@@ -38,6 +38,10 @@ export default function HomePosts({
     }
   }, [inView, noMore]);
 
+  useEffect(() => {
+    setItems(posts);
+  }, [posts]);
+
   const loadMore = async () => {
     const morePosts = await fetch(
       `/api/loadMore?cursor=${items[items.length - 1].id}`,

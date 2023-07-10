@@ -8,6 +8,7 @@ import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { replyToThread } from "@/lib/actions";
+import { useToast } from "@/components/ui/use-toast";
 
 export function Create({
   itemData,
@@ -30,7 +31,8 @@ export function Create({
   const [comment, setComment] = useState("");
   const [clicked, setClicked] = useState(false);
 
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { toast } = useToast();
+  const { user } = useUser();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
 
@@ -39,6 +41,9 @@ export function Create({
       setComment("");
       setOpen(false);
       setClicked(false);
+      toast({
+        title: "Replied to thread.",
+      });
     }
   }, [isPending]);
 

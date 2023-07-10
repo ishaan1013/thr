@@ -8,10 +8,13 @@ import Image from "next/image";
 
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
   const [thread, setThread] = useState("");
   const [clicked, setClicked] = useState(false);
+
+  const { toast } = useToast();
 
   const { user } = useUser();
   const [isPending, startTransition] = useTransition();
@@ -22,6 +25,9 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
       setThread("");
       setOpen(false);
       setClicked(false);
+      toast({
+        title: "Thread created.",
+      });
     }
   }, [isPending]);
 

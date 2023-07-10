@@ -72,7 +72,9 @@ export default async function ProfilePageLayout({
       <div className="px-3 relative flex w-full items-center justify-between mt-8 mb-6">
         <Globe className="w-5 h-5" />
         <div className="flex items-center space-x-3">
-          <Instagram className="w-5 h-5" />
+          <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
+            <Instagram className="w-5 h-5" />
+          </a>
           <MoreHorizontal className="w-5 h-5" />
         </div>
       </div>

@@ -73,6 +73,23 @@ export async function repostThread(
 export async function deleteThread(id: string, path: string) {
   // ! navigate back to home if on dedicated page for this thread & its deleted
 
+  await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      likes: {
+        set: [],
+      },
+      children: {
+        deleteMany: {},
+      },
+    },
+    include: {
+      likes: true,
+    },
+  });
+
   await prisma.post.delete({
     where: {
       id,

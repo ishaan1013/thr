@@ -11,7 +11,7 @@ import Nav from "@/components/ui/nav";
 import { redirect } from "next/navigation";
 import HomePosts from "@/components/thread/homePosts";
 
-// export const revalidate = 0;
+export const revalidate = 0;
 
 export default async function Page() {
   const user = await currentUser();
@@ -84,6 +84,9 @@ export default async function Page() {
         </div>
       </div>
 
+      {/* <div className="whitespace-pre text-xs">
+        {JSON.stringify(posts, null, 2)}
+      </div> */}
       <HomePosts posts={posts} />
     </>
     // </div>

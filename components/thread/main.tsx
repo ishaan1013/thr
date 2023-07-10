@@ -81,7 +81,11 @@ export default function MainItem({
         </div>
         <div className="flex items-center space-x-2">
           {/* <Timestamp time={data.createdAt} /> */}
-          <MoreMenu />
+          <MoreMenu
+            name={data.author.name}
+            id={data.id}
+            author={data.author.id}
+          />
         </div>
       </div>
       <div className="w-full">
