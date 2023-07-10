@@ -66,3 +66,45 @@ export async function onboardData(
     },
   });
 }
+
+export async function followUser(
+  userId: string,
+  followingId: string,
+  path: string
+) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      following: {
+        connect: {
+          id: followingId,
+        },
+      },
+    },
+  });
+
+  revalidatePath(path);
+}
+
+export async function unfollowUser(
+  userId: string,
+  followingId: string,
+  path: string
+) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      following: {
+        disconnect: {
+          id: followingId,
+        },
+      },
+    },
+  });
+
+  revalidatePath(path);
+}
