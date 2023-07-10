@@ -27,11 +27,13 @@ export default function Controls({
   const likes = data.likes.map((like) => like.userId);
 
   return (
-    <div className="flex items-center space-x-3.5 py-2">
-      <Like likes={likes} numPosts={numPosts} post={data.id} />
-      <Modal data={data} />
-      <Repost />
-      <Share />
+    <div className="relative h-9">
+      <div className="flex items-center absolute top-0 left-0 space-x-3.5 py-2 z-10">
+        <Like likes={likes} numPosts={numPosts} post={data.id} />
+        <Modal data={data} />
+        <Repost />
+        <Share name={data.author.name} post={data.id} />
+      </div>
     </div>
   );
 }

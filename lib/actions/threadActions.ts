@@ -83,8 +83,6 @@ export async function deleteThread(id: string, path: string) {
 }
 
 export async function likeThread(id: string, userId: string, path: string) {
-  console.log("likeThread", id, userId, path);
-
   await prisma.likes.create({
     data: {
       post: {

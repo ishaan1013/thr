@@ -69,7 +69,7 @@ export default function Item({
   });
 
   return (
-    <Link href={`/posts/${data.id}`} className={mainClass}>
+    <Link href={`/t/${data.id}`} className={mainClass}>
       <div className="flex flex-col items-center justify-between">
         <div className="w-8 h-8 mt-1 rounded-full bg-neutral-600 overflow-hidden">
           <Image
@@ -81,7 +81,7 @@ export default function Item({
           />
         </div>
         <div className="w-0.5 grow mt-2 rounded-full bg-neutral-700" />
-        <Others others={data.children} />
+        {comment ? null : <Others others={data.children} />}
       </div>
       <div className="w-full space-y-1">
         <div className="w-full flex items-center justify-between">

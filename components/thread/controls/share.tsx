@@ -8,11 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link, Send, Share } from "lucide-react";
 
-export default function ShareButton() {
+export default function ShareButton({
+  post,
+  name,
+}: {
+  post: string;
+  name: string;
+}) {
   const shareData = {
     title: "Threads",
-    text: "Threads Clone Link",
-    url: "http://localhost:3000/",
+    text: "Link to " + name + "'s post on Threads",
+    url: "http://localhost:3000/t/" + post,
   };
 
   return (
@@ -22,13 +28,20 @@ export default function ShareButton() {
         <Send className="w-[18px] h-[18px]" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
           {" "}
           <Link className="mr-2 h-4 w-4" />
           Copy Link
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
             navigator.share(shareData);
           }}
         >

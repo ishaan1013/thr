@@ -35,7 +35,12 @@ export function Modal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
+      <DialogTrigger
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((prev) => !prev);
+        }}
+      >
         <MessageCircle className="w-5 h-5" />
       </DialogTrigger>
       <DialogContent>

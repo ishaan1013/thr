@@ -45,7 +45,11 @@ export default function Like({
 
   return (
     <button
-      onClick={() => handleLike()}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleLike();
+      }}
       className={`w-5 duration-200 h-5 ${liked ? "text-red-600" : ""}`}
     >
       <Heart fill={liked ? "#dc2626" : "#0a0a0a"} className="w-5 h-5" />
