@@ -9,6 +9,9 @@ import { useState, useTransition } from "react";
 import { useToast } from "../ui/use-toast";
 import { AlertCircle } from "lucide-react";
 
+import Filter from "bad-words";
+import { validateUsername } from "@/lib/utils";
+
 export function OnboardingProfileCard({
   userData,
   next,
@@ -25,6 +28,8 @@ export function OnboardingProfileCard({
   allUsernames: string[];
 }) {
   const [isPending, startTransition] = useTransition();
+
+  const filter = new Filter();
 
   const [username, setUsername] = useState(userData.username);
   const [name, setName] = useState(userData.name);
@@ -51,10 +56,28 @@ export function OnboardingProfileCard({
                     <AlertCircle className="w-4 h-4 mr-1" /> Username is taken.
                   </div>
                 ) : null}
+                {filter.isProfane(username) ? (
+                  <div className="text-red-500 text-sm flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1" /> Choose an
+                    appropriate username.
+                  </div>
+                ) : null}
+                {!validateUsername(username) ? (
+                  <div className="text-red-500 text-sm flex items-center leading-snug">
+                    <AlertCircle className="min-w-[16px] min-h-[16px] mr-1" />{" "}
+                    Only use lowercase letters, numbers, underscores, & dots
+                    (cannot start/end with last 2).
+                  </div>
+                ) : null}
                 {username.length === 0 ? (
                   <div className="text-red-500 text-sm flex items-center">
                     <AlertCircle className="w-4 h-4 mr-1" /> Username cannot be
                     empty.
+                  </div>
+                ) : username.length > 16 ? (
+                  <div className="text-red-500 text-sm flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1" /> Username is too
+                    long.
                   </div>
                 ) : null}
               </div>
@@ -71,6 +94,11 @@ export function OnboardingProfileCard({
                     <AlertCircle className="w-4 h-4 mr-1" /> Your name cannot be
                     empty.
                   </div>
+                ) : name.length > 16 ? (
+                  <div className="text-red-500 text-sm flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1" /> Your name is too
+                    long.
+                  </div>
                 ) : null}
               </div>
               <div className="flex flex-col space-y-1.5">
@@ -81,6 +109,12 @@ export function OnboardingProfileCard({
                   id="bio"
                   placeholder="+ Write bio"
                 />
+                {name.length > 100 ? (
+                  <div className="text-red-500 text-sm flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1" /> Your bio is too
+                    long.
+                  </div>
+                ) : null}
               </div>
             </div>
           </form>
@@ -100,8 +134,13 @@ export function OnboardingProfileCard({
         className="w-full mt-6"
         disabled={
           name.length === 0 ||
+          name.length > 16 ||
           username.length === 0 ||
-          allUsernames.includes(username)
+          username.length > 16 ||
+          bio.length > 100 ||
+          allUsernames.includes(username) ||
+          !validateUsername(username) ||
+          filter.isProfane(username)
         }
       >
         Continue

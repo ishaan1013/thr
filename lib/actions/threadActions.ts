@@ -2,15 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
+import Filter from "bad-words";
 
 export async function createThread(
   text: string,
   authorId: string,
   path: string
 ) {
+  const filter = new Filter();
+
   await prisma.post.create({
     data: {
-      text,
+      text: filter.clean(text),
       author: {
         connect: {
           id: authorId,
@@ -28,9 +31,11 @@ export async function replyToThread(
   threadId: string,
   path: string
 ) {
+  const filter = new Filter();
+
   await prisma.post.create({
     data: {
-      text,
+      text: filter.clean(text),
       author: {
         connect: {
           id: authorId,
@@ -135,22 +140,6 @@ export async function likeThread(id: string, userId: string, path: string) {
 }
 
 export async function unlikeThread(id: string, userId: string, path: string) {
-  // await prisma.post.update({
-  //   where: {
-  //     id,
-  //   },
-  //   data: {
-  //     likes: {
-  //       disconnect: {
-  //         postId_userId: {
-  //           postId: id,
-  //           userId,
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
-
   await prisma.likes.delete({
     where: {
       postId_userId: {

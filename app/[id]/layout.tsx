@@ -6,11 +6,15 @@ import { redirect } from "next/navigation";
 import Nav from "@/components/ui/nav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Globe, Instagram, MoreHorizontal } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 import logo from "@/assets/threads.svg";
 import { InfoModal } from "@/components/profile/info";
 import SelfShare from "@/components/profile/selfShare";
+import { nFormatter } from "@/lib/utils";
+import SignOut from "@/components/profile/signOut";
+import { EditModal } from "@/components/profile/edit";
+import FollowButton from "@/components/profile/follow";
 
 export default async function ProfilePageLayout({
   children,
@@ -66,7 +70,11 @@ export default async function ProfilePageLayout({
     );
   }
 
-  const self = getUser.username === params.id;
+  const self = getSelf.username === params.id;
+
+  const isFollowing = self
+    ? false
+    : getUser.followedBy.some((follow) => follow.id === getSelf.id);
 
   return (
     <>
@@ -78,6 +86,7 @@ export default async function ProfilePageLayout({
             <Instagram className="w-5 h-5" />
           </a>
           <InfoModal />
+          <SignOut />
         </div>
       </div>
       <div className="px-3 flex w-full justify-between items-start">
@@ -89,8 +98,12 @@ export default async function ProfilePageLayout({
               threads.net
             </Badge>
           </div>
+          {getUser.bio ? (
+            <div className="pt-4 leading-relaxed">{getUser.bio}</div>
+          ) : null}
           <div className="py-4 text-neutral-600">
-            {getUser.followedBy.length} followers
+            {nFormatter(getUser.followedBy.length, 1)}{" "}
+            {getUser.followedBy.length === 1 ? "follower" : "followers"}
           </div>
         </div>
 
@@ -106,16 +119,17 @@ export default async function ProfilePageLayout({
 
       {self ? (
         <div className="w-full space-x-2 flex px-3">
-          <Button variant="outline" className="w-full">
-            Edit Profile
-          </Button>
+          <EditModal data={getUser} />
           <SelfShare name={getUser.name} username={getUser.username} />
         </div>
       ) : (
         <div className="w-full px-3">
-          <Button className="w-full" variant="outline">
-            Follow
-          </Button>
+          <FollowButton
+            id={getSelf.id}
+            followingId={getUser.id}
+            name={getUser.name}
+            isFollowing={isFollowing}
+          />
         </div>
       )}
 

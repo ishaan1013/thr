@@ -53,3 +53,8 @@ export const nFormatter = (num: number, digits: number) => {
     ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
     : "0";
 };
+
+export const validateUsername = (text: string) => {
+  const pattern = /^[a-zA-Z0-9][a-zA-Z0-9._]*[a-zA-Z0-9]$/;
+  return pattern.test(text);
+};

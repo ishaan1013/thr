@@ -41,8 +41,9 @@ export function InfoModal() {
             and Prisma.
           </div>
           <div className="text-neutral-600 leading-relaxed">
-            It's mostly complete & working, with a few small bugs/missing
-            features (like blocking/reporting, the activity page, etc.).
+            It&apos;s mostly complete & working, with a few small bugs/missing
+            features (like blocking/reporting, reposting/quoting, the activity
+            page, etc.).
           </div>
           <DialogFooter>
             <a

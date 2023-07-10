@@ -25,13 +25,14 @@ export default function Repost() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         <DropdownMenuItem
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toast({
-              title: "Reposted",
-            });
-          }}
+          // onClick={(e) => {
+          //   e.preventDefault();
+          //   e.stopPropagation();
+          //   toast({
+          //     title: "Reposted",
+          //   });
+          // }}
+          disabled
         >
           {" "}
           <Repeat2 className="mr-2 h-4 w-4" />
