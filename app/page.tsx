@@ -9,6 +9,7 @@ import { auth, currentUser } from "@clerk/nextjs";
 import prisma from "@/lib/prisma";
 import Nav from "@/components/ui/nav";
 import { redirect } from "next/navigation";
+import HomePosts from "@/components/thread/homePosts";
 
 export const revalidate = 0;
 
@@ -51,7 +52,7 @@ export default async function Page() {
   }
 
   const posts = await prisma.post.findMany({
-    take: 10,
+    take: 3,
     orderBy: {
       createdAt: "desc",
     },
@@ -82,19 +83,8 @@ export default async function Page() {
           />
         </div>
       </div>
-      {posts.map((post) => {
-        return <Item key={post.id} posts={posts} data={post} />;
-      })}
-      <div className="w-full py-4 flex justify-center">
-        {posts.length === 0 ? (
-          <div className="text-neutral-600 mt-4 text-center leading-loose">
-            There are no threads... <br />
-            Try making one!
-          </div>
-        ) : posts.length <= 20 ? null : (
-          <Button variant="outline">Load More</Button>
-        )}
-      </div>
+
+      <HomePosts posts={posts} />
     </>
     // </div>
     // </main>

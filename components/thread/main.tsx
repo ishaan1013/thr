@@ -4,10 +4,12 @@ import Others from "./others";
 import MoreMenu from "./moreMenu";
 import Controls from "./controls";
 import { Post, Prisma } from "@prisma/client";
+import { timeSince } from "@/lib/utils";
+import Timestamp from "./timestamp";
 
-import relativeTime from "dayjs/plugin/relativeTime";
-import dayjs from "dayjs";
-import updateLocale from "dayjs/plugin/updateLocale";
+// import relativeTime from "dayjs/plugin/relativeTime";
+// import dayjs from "dayjs";
+// import updateLocale from "dayjs/plugin/updateLocale";
 
 export default function MainItem({
   data,
@@ -39,28 +41,28 @@ export default function MainItem({
     };
   }>[];
 }) {
-  dayjs.extend(relativeTime);
-  const ago = dayjs(data.createdAt).fromNow();
+  // dayjs.extend(relativeTime);
+  // const ago = dayjs(data.createdAt).fromNow();
 
-  dayjs.extend(updateLocale);
+  // dayjs.extend(updateLocale);
 
-  dayjs.updateLocale("en", {
-    relativeTime: {
-      future: "in %s",
-      past: "%s",
-      s: "now",
-      m: "1m",
-      mm: "%dm",
-      h: "1h",
-      hh: "%dh",
-      d: "1d",
-      dd: "%dd",
-      M: "1m",
-      MM: "%dm",
-      y: "1y",
-      yy: "%dy",
-    },
-  });
+  // dayjs.updateLocale("en", {
+  //   relativeTime: {
+  //     future: "in %s",
+  //     past: "%s",
+  //     s: "now",
+  //     m: "1m",
+  //     mm: "%dm",
+  //     h: "1h",
+  //     hh: "%dh",
+  //     d: "1d",
+  //     dd: "%dd",
+  //     M: "1m",
+  //     MM: "%dm",
+  //     y: "1y",
+  //     yy: "%dy",
+  //   },
+  // });
 
   return (
     <div className="px-3 py-4 space-y-3 flex flex-col border-b font-light border-neutral-900">
@@ -78,7 +80,7 @@ export default function MainItem({
           <div className="font-semibold">{data.author.name}</div>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="text-neutral-600">{ago}</div>
+          {/* <Timestamp time={data.createdAt} /> */}
           <MoreMenu />
         </div>
       </div>
