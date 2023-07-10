@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     }
 
     const posts = await prisma.post.findMany({
-      take: 3,
+      take: 15,
       skip: 1,
       cursor: {
         id: cursor,

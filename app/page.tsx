@@ -11,7 +11,7 @@ import Nav from "@/components/ui/nav";
 import { redirect } from "next/navigation";
 import HomePosts from "@/components/thread/homePosts";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export default async function Page() {
   const user = await currentUser();
@@ -52,7 +52,7 @@ export default async function Page() {
   }
 
   const posts = await prisma.post.findMany({
-    take: 3,
+    take: 30,
     orderBy: {
       createdAt: "desc",
     },
