@@ -2,18 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
-import Filter from "bad-words";
+import { cleanup } from "../utils";
 
 export async function createThread(
   text: string,
   authorId: string,
   path: string
 ) {
-  const filter = new Filter();
-
   await prisma.post.create({
     data: {
-      text: filter.clean(text),
+      text: cleanup(text),
       author: {
         connect: {
           id: authorId,
@@ -31,11 +29,9 @@ export async function replyToThread(
   threadId: string,
   path: string
 ) {
-  const filter = new Filter();
-
   await prisma.post.create({
     data: {
-      text: filter.clean(text),
+      text: cleanup(text),
       author: {
         connect: {
           id: authorId,

@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import Filter from "bad-words";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -57,4 +58,14 @@ export const nFormatter = (num: number, digits: number) => {
 export const validateUsername = (text: string) => {
   const pattern = /^[a-zA-Z0-9][a-zA-Z0-9._]*[a-zA-Z0-9]$/;
   return pattern.test(text);
+};
+
+export const cleanup = (text: string) => {
+  const filter = new Filter();
+
+  try {
+    return filter.clean(text);
+  } catch {
+    return text;
+  }
 };

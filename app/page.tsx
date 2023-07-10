@@ -52,7 +52,7 @@ export default async function Page() {
   }
 
   const posts = await prisma.post.findMany({
-    take: 30,
+    take: 20,
     orderBy: {
       createdAt: "desc",
     },

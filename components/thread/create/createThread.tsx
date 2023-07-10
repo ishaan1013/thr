@@ -16,7 +16,7 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
 
   const { toast } = useToast();
 
-  const { user } = useUser();
+  const { isSignedIn, isLoaded, user } = useUser();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
 
@@ -31,7 +31,7 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
     }
   }, [isPending]);
 
-  if (!user) return null;
+  if (!isLoaded || !isSignedIn) return null;
 
   return (
     <div>

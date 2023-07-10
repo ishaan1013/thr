@@ -32,7 +32,7 @@ export function Create({
   const [clicked, setClicked] = useState(false);
 
   const { toast } = useToast();
-  const { user } = useUser();
+  const { isSignedIn, isLoaded, user } = useUser();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
 
@@ -47,7 +47,7 @@ export function Create({
     }
   }, [isPending]);
 
-  if (!user) return null;
+  if (!isLoaded || !isSignedIn) return null;
 
   return (
     <div>

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
-import Filter from "bad-words";
+import { cleanup } from "../utils";
 
 export async function changeUsername(
   username: string,
@@ -27,15 +27,13 @@ export async function editProfile(
   userId: string,
   path: string
 ) {
-  const filter = new Filter();
-
   await prisma.user.update({
     where: {
       id: userId,
     },
     data: {
-      name: filter.clean(name),
-      bio: filter.clean(bio),
+      name: cleanup(name),
+      bio: cleanup(bio),
     },
   });
 
@@ -51,14 +49,12 @@ export async function onboardData(
   image: string,
   userId: string
 ) {
-  const filter = new Filter();
-
   await prisma.user.create({
     data: {
       id: userId,
       username: username.toLowerCase(),
-      name: filter.clean(name),
-      bio: filter.clean(bio),
+      name: cleanup(name),
+      bio: cleanup(bio),
       image,
       onboarded: true,
     },
