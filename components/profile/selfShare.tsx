@@ -8,35 +8,35 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/components/ui/use-toast";
-import { Link, Send, Share } from "lucide-react";
+import { Button } from "../ui/button";
+import { Link, Share } from "lucide-react";
+import { useToast } from "../ui/use-toast";
 
-export default function ShareButton({
-  post,
+export default function SelfShare({
   name,
+  username,
 }: {
-  post: string;
   name: string;
+  username: string;
 }) {
   const { toast } = useToast();
 
   const shareData = {
     title: "Threads",
     text: "Link to " + name + "'s post on Threads",
-    url: "http://localhost:3000/t/" + post,
+    url: "http://localhost:3000/" + username,
   };
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        {" "}
-        <Send className="w-[18px] h-[18px]" />
+      <DropdownMenuTrigger className="w-full">
+        <Button variant="outline" className="w-full">
+          Share Profile
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent>
         <DropdownMenuItem
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
+          onClick={() => {
             navigator.clipboard.writeText(shareData.url);
             toast({
               title: "Copied to clipboard",
@@ -48,9 +48,7 @@ export default function ShareButton({
           Copy Link
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
+          onClick={() => {
             navigator.share(shareData);
           }}
         >

@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Globe, Instagram, MoreHorizontal } from "lucide-react";
 
 import logo from "@/assets/threads.svg";
+import { InfoModal } from "@/components/profile/info";
+import SelfShare from "@/components/profile/selfShare";
 
 export default async function ProfilePageLayout({
   children,
@@ -69,13 +71,13 @@ export default async function ProfilePageLayout({
   return (
     <>
       <Nav username={getSelf.username} />
-      <div className="px-3 relative flex w-full items-center justify-between mt-8 mb-6">
-        <Globe className="w-5 h-5" />
+      <div className="px-3 relative flex w-full items-center justify-end mt-8 mb-6">
+        {/* <Globe className="w-5 h-5" /> */}
         <div className="flex items-center space-x-3">
           <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
             <Instagram className="w-5 h-5" />
           </a>
-          <MoreHorizontal className="w-5 h-5" />
+          <InfoModal />
         </div>
       </div>
       <div className="px-3 flex w-full justify-between items-start">
@@ -107,9 +109,7 @@ export default async function ProfilePageLayout({
           <Button variant="outline" className="w-full">
             Edit Profile
           </Button>
-          <Button variant="outline" className="w-full">
-            Share Profile
-          </Button>
+          <SelfShare name={getUser.name} username={getUser.username} />
         </div>
       ) : (
         <div className="w-full px-3">

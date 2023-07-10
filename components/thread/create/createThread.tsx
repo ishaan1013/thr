@@ -26,7 +26,7 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
       setOpen(false);
       setClicked(false);
       toast({
-        title: "Thread created.",
+        title: "Thread created",
       });
     }
   }, [isPending]);

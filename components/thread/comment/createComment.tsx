@@ -42,7 +42,7 @@ export function Create({
       setOpen(false);
       setClicked(false);
       toast({
-        title: "Replied to thread.",
+        title: "Replied to thread",
       });
     }
   }, [isPending]);

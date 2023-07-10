@@ -40,7 +40,7 @@ export default function MoreMenu({
   useEffect(() => {
     if (deleted && !isPending) {
       toast({
-        title: "Thread deleted.",
+        title: "Thread deleted",
       });
       setOpen(false);
       if (pathname.startsWith("/t")) {
@@ -88,7 +88,7 @@ export default function MoreMenu({
                 e.stopPropagation();
                 e.preventDefault();
                 toast({
-                  title: name + " has been blocked.",
+                  title: name + " has been blocked",
                 });
                 setOpen(false);
               }}
@@ -101,7 +101,7 @@ export default function MoreMenu({
                 e.stopPropagation();
                 e.preventDefault();
                 toast({
-                  title: name + " has been reported.",
+                  title: name + " has been reported",
                 });
                 setOpen(false);
               }}
