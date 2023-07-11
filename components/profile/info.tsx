@@ -42,8 +42,7 @@ export function InfoModal() {
           </div>
           <div className="text-neutral-600 leading-relaxed">
             It&apos;s mostly complete & working, with a few small bugs/missing
-            features (like blocking/reporting, reposting/quoting, the activity
-            page, etc.).
+            features (see GitHub issues for details).
           </div>
           <DialogFooter>
             <a
