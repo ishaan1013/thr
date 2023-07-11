@@ -30,7 +30,14 @@ export default async function ThreadPageLayout({
 
   return (
     <>
-      <Nav username={getUser.username} />
+      <Nav
+        create={{
+          id: getUser.id,
+          name: getUser.name,
+          image: getUser.image,
+        }}
+        username={getUser.username}
+      />
       <div className="px-3 relative mt-8 mb-6">
         <BackButton />
         <div className="text-2xl font-semibold absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">

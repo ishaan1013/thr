@@ -77,7 +77,14 @@ export default async function SearchPage({
 
   return (
     <>
-      <Nav username={getUser.username} />
+      <Nav
+        create={{
+          id: getUser.id,
+          name: getUser.name,
+          image: getUser.image,
+        }}
+        username={getUser.username}
+      />
 
       <div className="px-3 mb-1">
         <div className="text-2xl font-semibold pt-8 pb-5">Search</div>

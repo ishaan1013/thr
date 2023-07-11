@@ -3,20 +3,28 @@
 import { createThread } from "@/lib/actions";
 import { Button } from "../../ui/button";
 import { useEffect, useState, useTransition } from "react";
-import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
-export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
+export function Create({
+  setOpen,
+  create,
+}: {
+  setOpen: (open: boolean) => void;
+  create: {
+    id: string;
+    name: string;
+    image: string;
+  };
+}) {
   const [thread, setThread] = useState("");
   const [clicked, setClicked] = useState(false);
 
   const { toast } = useToast();
 
-  const { isSignedIn, isLoaded, user } = useUser();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
 
@@ -31,19 +39,17 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
     }
   }, [isPending]);
 
-  if (!isLoaded || !isSignedIn) return null;
-
   return (
     <div>
       <div className="space-x-2 flex font-light">
         <div className="flex flex-col items-center justify-start">
           <div className="w-8 h-8 rounded-full bg-neutral-600 overflow-hidden">
             <Image
-              src={user.imageUrl}
+              src={create.image}
               height={32}
               width={32}
               className=""
-              alt={user.firstName + "'s profile image"}
+              alt={create.name + "'s profile image"}
             />
           </div>
           <div className="w-0.5 grow mt-2 rounded-full bg-neutral-800" />
@@ -71,7 +77,7 @@ export function Create({ setOpen }: { setOpen: (open: boolean) => void }) {
         variant="outline"
         className="w-full mt-4"
         onClick={() => {
-          startTransition(() => createThread(thread, user.id, pathname));
+          startTransition(() => createThread(thread, create.id, pathname));
           setClicked(true);
         }}
       >

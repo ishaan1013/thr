@@ -49,7 +49,14 @@ export default async function ProfilePageLayout({
   if (!getUser) {
     return (
       <>
-        <Nav username={null} />
+        <Nav
+          create={{
+            id: "",
+            name: "",
+            image: "",
+          }}
+          username={null}
+        />
         <div className="flex items-center justify-center w-full py-5">
           <div className="h-9 w-9 bg-cover">
             <Image
@@ -78,7 +85,14 @@ export default async function ProfilePageLayout({
 
   return (
     <>
-      <Nav username={getSelf.username} />
+      <Nav
+        create={{
+          id: getSelf.id,
+          name: getSelf.name,
+          image: getSelf.image,
+        }}
+        username={getSelf.username}
+      />
       <div className="px-3 relative flex w-full items-center justify-end mt-8 mb-6">
         {/* <Globe className="w-5 h-5" /> */}
         <div className="flex items-center space-x-3">

@@ -11,7 +11,15 @@ import { Edit } from "lucide-react";
 import { Create } from ".";
 import { useState } from "react";
 
-export function Modal() {
+export function Modal({
+  create,
+}: {
+  create: {
+    id: string;
+    name: string;
+    image: string;
+  };
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,7 +31,7 @@ export function Modal() {
         <DialogHeader>
           <DialogTitle className="mb-3">New Thread</DialogTitle>
         </DialogHeader>
-        <Create setOpen={setOpen} />
+        <Create create={create} setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );

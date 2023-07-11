@@ -2,12 +2,21 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { SignOutButton } from "@clerk/nextjs";
 
-import { Edit, Heart, Home, Search, User2 } from "lucide-react";
+import { Heart, Home, Search, User2 } from "lucide-react";
 import { Modal } from "../thread/create";
 
-export default function Nav({ username }: { username: string | null }) {
+export default function Nav({
+  username,
+  create,
+}: {
+  username: string | null;
+  create: {
+    id: string;
+    name: string;
+    image: string;
+  };
+}) {
   const path = usePathname();
 
   return (
@@ -20,7 +29,7 @@ export default function Nav({ username }: { username: string | null }) {
           className={`w-6 h-6 ${path === "/search" ? "" : "text-neutral-600"}`}
         />
       </Link>
-      <Modal />
+      <Modal create={create} />
       <Link href="/activity">
         <Heart
           className={`w-6 h-6 ${
