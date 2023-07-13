@@ -10,8 +10,8 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Threads",
-  description: "A threads clone build with Next.js",
+  title: "Meta's new app",
+  description: "A clone built with Next.js",
 };
 
 export default function RootLayout({
