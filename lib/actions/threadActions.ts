@@ -80,7 +80,7 @@ export async function deleteThread(id: string, path: string) {
     },
     data: {
       likes: {
-        set: [],
+        deleteMany: {},
       },
       children: {
         deleteMany: {},
