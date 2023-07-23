@@ -67,6 +67,15 @@ export default async function Page() {
     },
     where: {
       parent: null,
+      NOT: {
+        author: {
+          blockedBy: {
+            some: {
+              id: getUser.id,
+            },
+          },
+        },
+      },
     },
   });
 
