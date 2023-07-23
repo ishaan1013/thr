@@ -102,3 +102,55 @@ export async function unfollowUser(
 
   revalidatePath(path);
 }
+
+export async function blockUser(
+  userId: string,
+  blockedId: string,
+  path: string
+) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      followedBy: {
+        disconnect: {
+          id: blockedId,
+        },
+      },
+      following: {
+        disconnect: {
+          id: blockedId,
+        },
+      },
+      blocked: {
+        connect: {
+          id: blockedId,
+        },
+      },
+    },
+  });
+
+  revalidatePath(path);
+}
+
+export async function unblockUser(
+  userId: string,
+  blockedId: string,
+  path: string
+) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      blocked: {
+        disconnect: {
+          id: blockedId,
+        },
+      },
+    },
+  });
+
+  revalidatePath(path);
+}

@@ -15,6 +15,7 @@ import { nFormatter } from "@/lib/utils";
 import SignOut from "@/components/profile/signOut";
 import { EditModal } from "@/components/profile/edit";
 import FollowButton from "@/components/profile/follow";
+import UnblockButton from "@/components/profile/unblock";
 
 export default async function ProfilePageLayout({
   children,
@@ -43,6 +44,7 @@ export default async function ProfilePageLayout({
     },
     include: {
       followedBy: true,
+      blockedBy: true,
     },
   });
 
@@ -82,6 +84,10 @@ export default async function ProfilePageLayout({
   const isFollowing = self
     ? false
     : getUser.followedBy.some((follow) => follow.id === getSelf.id);
+
+  const isBlocked = self
+    ? false
+    : getUser.blockedBy.some((block) => block.id === getSelf.id);
 
   return (
     <>
@@ -136,6 +142,14 @@ export default async function ProfilePageLayout({
           <EditModal data={getUser} />
           <SelfShare name={getUser.name} username={getUser.username} />
         </div>
+      ) : isBlocked ? (
+        <div className="w-full px-3">
+          <UnblockButton
+            id={getSelf.id}
+            blockedId={getUser.id}
+            name={getUser.name}
+          />
+        </div>
       ) : (
         <div className="w-full px-3">
           <FollowButton
@@ -147,7 +161,7 @@ export default async function ProfilePageLayout({
         </div>
       )}
 
-      {children}
+      {!isBlocked && children}
     </>
   );
 }

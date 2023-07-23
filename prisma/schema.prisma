@@ -45,7 +45,11 @@ model User {
   likes      Likes[]
   followedBy User[]   @relation("UserFollows")
   following  User[]   @relation("UserFollows")
-  onboarded  Boolean  @default(false)
+
+  blockedBy User[] @relation("UserBlocks")
+  blocked   User[] @relation("UserBlocks")
+
+  onboarded Boolean @default(false)
 }
 
 model Likes {

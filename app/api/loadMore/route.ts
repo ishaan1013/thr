@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs";
 
 export async function GET(req: Request) {
   try {
@@ -11,6 +12,14 @@ export async function GET(req: Request) {
         status: 403,
       });
     }
+
+    const user = await currentUser();
+
+    const getUser = await prisma.user.findUnique({
+      where: {
+        id: user?.id,
+      },
+    });
 
     const posts = await prisma.post.findMany({
       take: 10,
@@ -33,6 +42,15 @@ export async function GET(req: Request) {
       },
       where: {
         parent: null,
+        NOT: {
+          author: {
+            blockedBy: {
+              some: {
+                id: getUser?.id,
+              },
+            },
+          },
+        },
       },
     });
 

@@ -13,7 +13,7 @@ import { Flag, Loader2, MoreHorizontal, Trash, UserX2 } from "lucide-react";
 import { useToast } from "../ui/use-toast";
 import { useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { deleteThread } from "@/lib/actions";
+import { deleteThread, blockUser } from "@/lib/actions";
 
 export default function MoreMenu({
   author,
@@ -87,6 +87,7 @@ export default function MoreMenu({
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
+                startTransition(() => blockUser(user!.id, author, pathname));
                 toast({
                   title: name + " has been blocked",
                 });
