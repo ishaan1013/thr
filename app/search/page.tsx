@@ -33,6 +33,7 @@ export default async function SearchPage({
     ? await prisma.user.findMany({
         include: {
           followedBy: true,
+          blockedBy: true,
         },
         where: {
           NOT: {
@@ -62,6 +63,7 @@ export default async function SearchPage({
     : await prisma.user.findMany({
         include: {
           followedBy: true,
+          blockedBy: true,
         },
         where: {
           NOT: {
@@ -100,8 +102,12 @@ export default async function SearchPage({
             const isFollowing = user.followedBy.some(
               (follow) => follow.id === getUser.id
             );
+            const isBlocked = user.blockedBy.some(
+              (blocked) => blocked.id === getUser.id
+            );
             return (
               <SearchUser
+                isBlocked={isBlocked}
                 isFollowing={isFollowing}
                 key={user.id}
                 id={getUser.id}

@@ -4,10 +4,12 @@ import Image from "next/image";
 import { nFormatter } from "@/lib/utils";
 import Link from "next/link";
 import FollowButton from "./follow";
+import UnblockButton from "./unblock";
 
 export function SearchUser({
   user,
   isFollowing,
+  isBlocked,
   id,
 }: {
   user: Prisma.UserGetPayload<{
@@ -15,6 +17,7 @@ export function SearchUser({
       followedBy: true;
     };
   }>;
+  isBlocked: boolean;
   isFollowing: boolean;
   id: string;
 }) {
@@ -38,12 +41,16 @@ export function SearchUser({
             {user.followedBy.length === 1 ? "follower" : "followers"}
           </div>
         </div>
-        <FollowButton
-          isFollowing={isFollowing}
-          id={id}
-          followingId={user.id}
-          name={user.name}
-        />
+        {isBlocked ? (
+          <UnblockButton id={id} blockedId={user.id} name={user.name} />
+        ) : (
+          <FollowButton
+            isFollowing={isFollowing}
+            id={id}
+            followingId={user.id}
+            name={user.name}
+          />
+        )}
       </div>
     </Link>
   );
